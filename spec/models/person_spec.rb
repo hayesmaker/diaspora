@@ -537,18 +537,21 @@ describe Person do
     end
   end
 
-  describe "#close_account!" do
+  describe '#lock_access!' do
+    it 'sets the closed_account flag' do
+      @person.lock_access!
+      @person.reload.closed_account.should be_true
+    end
+  end
+
+  describe "#clear_profile!!" do
     before do
       @person = Factory(:person)
-    end
-    it 'sets the closed_account flag' do
-      @person.close_account!
-      @person.reload.closed_account.should be_true
     end
 
     it 'calls Profile#tombstone!' do
       @person.profile.should_receive(:tombstone!)
-      @person.close_account!
+      @person.clear_profile!
     end
   end
 end
